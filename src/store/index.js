@@ -14,7 +14,7 @@ export default new Vuex.Store({
   },
   actions: {
     loadSubraddit({ commit }) {
-      fetch("http://www.reddit.com/.json?sort=latest")
+      fetch("http://www.reddit.com/.json")
         .then(res => res.json())
         .then(result => {
           commit(

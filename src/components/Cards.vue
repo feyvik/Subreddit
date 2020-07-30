@@ -58,7 +58,7 @@ export default {
   img {
     // width: 100%;
     // height: 80vh;comm
-    object-fit: fill;
+    object-fit: cover;
     margin: auto;
   }
   h1 {
