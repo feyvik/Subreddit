@@ -6,8 +6,8 @@
         <div class="text-center">
           <img
             :src="sub.data.thumbnail"
-            :width="thumbnail_width"
-            :height="thumbnail_height"
+            :width="sub.data.thumbnail_width"
+            :height="sub.data.thumbnail_height"
             class="card-img-top"
             alt="..."
           />
@@ -15,9 +15,12 @@
         <div class="card-body mt-2 mb-2">
           <div class="row justify-content-between">
             <div class="col-lg-4">
-              <span>29th july 2020</span>
+              <span>{{ format_date(sub.data.created) }}</span>
             </div>
-            <div class="col-lg-4 text-right"><span>milk</span></div>
+            <div class="col-lg-4 text-right">
+              Upvote
+              <span class="text-success">{{ sub.data.upvote_ratio }}</span>
+            </div>
           </div>
           <a href="#">view more</a>
         </div>
@@ -33,6 +36,17 @@ export default {
       type: Array,
       required: false
     }
+  },
+  methods: {
+    format_date(value) {
+      const date = new Date(value);
+      const dateTimeFormat = new Intl.DateTimeFormat("en", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit"
+      });
+      dateTimeFormat.formatToParts(date);
+    }
   }
 };
 </script>
@@ -42,10 +56,13 @@ export default {
   min-width: 80%;
   padding: 30px 30px 10px 30px;
   img {
-    width: 100%;
+    // width: 100%;
     // height: 80vh;comm
     object-fit: fill;
     margin: auto;
+  }
+  h1 {
+    font-size: 20px;
   }
   span {
     font-size: 14px;
