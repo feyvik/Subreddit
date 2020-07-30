@@ -14,10 +14,14 @@ export default new Vuex.Store({
   },
   actions: {
     loadSubraddit({ commit }) {
-      fetch("https://www.reddit.com/.json")
-        .then(resp => resp.JSON())
+      fetch("http://www.reddit.com/.json?sort=latest")
+        .then(res => res.json())
         .then(result => {
-          commit("SAVE_SUBRADDIT", result.data);
+          commit(
+            "SAVE_SUBRADDIT",
+            result.data.children,
+            console.log(result.data.children.map(data => data))
+          );
         })
         .catch(error => {
           throw new Error(`API ${error}`);
