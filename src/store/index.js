@@ -20,8 +20,7 @@ export default new Vuex.Store({
         .then(result => {
           commit(
             "SAVE_SUBRADDIT",
-            result.data.children.map(data => data.data),
-            console.log(result.data.children.map(data => data.data))
+            result.data.children.map(data => data.data)
           );
         })
         .catch(error => {

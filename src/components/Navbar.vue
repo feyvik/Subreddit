@@ -31,7 +31,6 @@ export default {
   },
   methods: {
     loadSubraddit() {
-      console.log(this.search);
       this.$store.dispatch("loadSubraddit", this.search);
     }
   }

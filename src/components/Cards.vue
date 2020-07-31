@@ -68,14 +68,29 @@ export default {
       ];
       const publishedMonth = months[data.getMonth()];
       this.showDate = `${publishedMonth} ${publishedDate}, ${publishedYear}`;
-      console.log(this.showDate);
     },
     checkForImg() {
-      console.log(this.sub);
       const img = this.sub.thumbnail;
-      const dsp = img ? img : "me....";
-      this.src = dsp;
-      console.log(this.src);
+      if (!this.validURL(img)) {
+        this.src =
+          "https://dynaimage.cdn.cnn.com/cnn/c_fill,g_auto,w_1200,h_675,ar_16:9/https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F191120053137-03-milky-way-images-australia.jpg;";
+        return false;
+      } else {
+        this.src = img;
+        return true;
+      }
+    },
+    validURL(img) {
+      var pattern = new RegExp(
+        "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+          "(\\#[-a-z\\d_]*)?$",
+        "i"
+      ); // fragment locator
+      return !!pattern.test(img);
     }
   }
 };
@@ -86,7 +101,7 @@ export default {
   min-width: 80%;
   padding: 30px 30px 10px 30px;
   img {
-    height: 60vh;
+    height: 30vh;
     object-fit: fill;
     margin: auto;
   }
