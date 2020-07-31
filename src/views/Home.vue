@@ -3,7 +3,7 @@
     <div class="row justify-content-center align-items-start m-0 p-0">
       <div class="col-3"></div>
       <div class="col-6">
-        <div class="row" v-for="sub in subraddit" :key="sub">
+        <div class="row" v-for="sub in subraddit" :key="sub.id">
           <div class="col-12 md-4">
             <Cards :sub="sub" />
           </div>

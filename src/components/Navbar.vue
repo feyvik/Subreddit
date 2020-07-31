@@ -7,14 +7,15 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input
-              class="mr-2 form-control"
-              placeholder="Search"
-              type="text"
-            ></b-form-input>
-            <b-button class="my-2 my-sm-0" type="submit">Search</b-button>
-          </b-nav-form>
+          <b-form-input
+            class="mr-2 form-control"
+            placeholder="Search"
+            type="text"
+            v-model="search"
+          ></b-form-input>
+          <b-button class="my-2 my-sm-0" type="submit" @click="loadSubraddit()"
+            >Search</b-button
+          >
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -22,7 +23,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      search: ""
+    };
+  },
+  methods: {
+    loadSubraddit() {
+      console.log(this.search);
+      this.$store.dispatch("loadSubraddit", this.search);
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
 nav {

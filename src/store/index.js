@@ -13,13 +13,15 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    loadSubraddit({ commit }) {
-      fetch("http://www.reddit.com/.json")
+    loadSubraddit({ commit }, search = "ferrari") {
+      console.log(search);
+      fetch(`https://www.reddit.com/search.json?q=${search}&sort=top`)
         .then(res => res.json())
         .then(result => {
           commit(
             "SAVE_SUBRADDIT",
-            result.data.children
+            result.data.children.map(data => data.data),
+            console.log(result.data.children.map(data => data.data))
           );
         })
         .catch(error => {

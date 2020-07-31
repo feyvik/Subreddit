@@ -1,25 +1,25 @@
 <template>
   <div class="row" v-if="sub">
-    <div class="col-lg-12 col-sm-12 col-md-12">
+    <div class="col-lg-12 col-sm-12 col-md-12 mb-2">
       <div class="card">
-        <h5 class="card-title">{{ sub.data.title }}</h5>
+        <h5 class="card-title">{{ sub.title }}</h5>
         <div class="text-center">
           <img
-            :src="sub.data.thumbnail"
-            :width="sub.data.thumbnail_width"
-            :height="sub.data.thumbnail_height"
+            :src="this.src"
+            :width="sub.thumbnail_width"
+            :height="sub.thumbnail_height"
             class="card-img-top"
             alt="..."
           />
         </div>
         <div class="card-body mt-2 mb-2">
           <div class="row justify-content-between">
-            <div class="col-lg-4">
-              <span>{{ format_date(sub.data.created) }}</span>
+            <div class="col-lg-8">
+              <span>{{ (format_date(sub.created), showDate) }}</span>
             </div>
             <div class="col-lg-4 text-right">
               Upvote
-              <span class="text-success">{{ sub.data.upvote_ratio }}</span>
+              <span class="text-success">{{ sub.upvote_ratio }}</span>
             </div>
           </div>
           <a href="#">view more</a>
@@ -31,21 +31,51 @@
 
 <script>
 export default {
+  data() {
+    return {
+      showDate: null,
+      src: ""
+    };
+  },
   props: {
     sub: {
-      type: Array,
+      type: Object,
       required: false
     }
   },
+  created() {
+    this.checkForImg();
+  },
   methods: {
     format_date(value) {
-      const date = new Date(value);
-      const dateTimeFormat = new Intl.DateTimeFormat("en", {
-        year: "numeric",
-        month: "short",
-        day: "2-digit"
-      });
-      dateTimeFormat.formatToParts(date);
+      const date = value;
+      const data = new Date(date);
+      const publishedYear = data.getFullYear();
+      const publishedDate = data.getDate();
+      const months = [
+        "January",
+        "Febraury",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+      const publishedMonth = months[data.getMonth()];
+      this.showDate = `${publishedMonth} ${publishedDate}, ${publishedYear}`;
+      console.log(this.showDate);
+    },
+    checkForImg() {
+      console.log(this.sub);
+      const img = this.sub.thumbnail;
+      const dsp = img ? img : "me....";
+      this.src = dsp;
+      console.log(this.src);
     }
   }
 };
@@ -56,13 +86,12 @@ export default {
   min-width: 80%;
   padding: 30px 30px 10px 30px;
   img {
-    // width: 100%;
-    // height: 80vh;comm
-    object-fit: cover;
+    height: 60vh;
+    object-fit: fill;
     margin: auto;
   }
   h1 {
-    font-size: 20px;
+    font-size: 16px;
   }
   span {
     font-size: 14px;
